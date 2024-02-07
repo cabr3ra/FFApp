@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Fruta Facil</string>
+    <string name="title">Fruta Facil</string>
+    <string name="description">Comparador de precios de frutas en fruterias locales</string>
+    <string name="menu">MENU</string>
+    <string name="fruitshoplist">fruit shop list</string>
+    <string name="profile">profile</string>
+    <string name="about_us">ABOUT US</string>
+    <string name="bienvenido">WELCOME!</string>
+    <string name="about_us_description1">
+        Hola, somos Yanis, Sergi y Oriol, y juntos formamos la empresa "Operación YSO".</string>
+    <string name="about_us_description2">
+        Actualmente, estamos inmersos en nuestra formación superior en Desarrollo de Aplicaciones Multiplataforma.</string>
+    <string name="about_us_description3">
+        ¡Únete a nosotros mientras perseguimos nuestras ambiciones en el fascinante mundo de la tecnología y la innovación!</string>
+    <string name="app_description">Fruta Fácil es una startup que busca simplificar la vida de los consumidores al proporcionarles una herramienta fácil de usar para comparar los precios de frutas y verduras en sus tiendas locales de comestibles. El nombre "Fruta Fácil" encapsula perfectamente la facilidad y conveniencia que ofrecemos.</string>
+    <string name="logoproyecto">logoProyecto</string>
+    <string name="logoempresa">logoEmpresa</string>
+    <string name="admin">Admin</string>
+    <string name="darse_de_baja">Darse de baja</string>
+    <string name="nuevo_nombre">Nuevo Nombre</string>
+    <string name="nuevo_nombre_de_usuario">Nuevo Nombre de Usuario</string>
+    <string name="email_actual">Email actual</string>
+    <string name="nombre_actual">Nombre actual</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="password_actual">Password actual</string>
+    <string name="nuevo_password">Nuevo Password</string>
+</resources>

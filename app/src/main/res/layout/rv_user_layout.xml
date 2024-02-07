@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="username"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_rv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="mgimena"
+        app:layout_constraintLeft_toRightOf="@+id/tv_username"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <TextView
+        android:id="@+id/tv_rv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Aqui el nom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username"/>
+
+    <TextView
+        android:id="@+id/tv_rv_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Aqui el cognom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_name"/>
+
+    <TextView
+        android:id="@+id/tv_rv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Aqui el email"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_surname"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
