@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.oriol.ffapp.server.APIService
+import com.oriol.ffapp.server.Routes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // Cambia la función postUserLogin para usar buscarUsersLogin
     fun postUserLogin(view: View) {
         if (validateFields()) {
             CoroutineScope(Dispatchers.IO).launch {
@@ -55,20 +57,30 @@ class LoginActivity : AppCompatActivity() {
                     interceptor.level = HttpLoggingInterceptor.Level.BODY
                     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-                    val con = Retrofit.Builder().baseUrl(Rutes.baseUrl)
+                    val con = Retrofit.Builder().baseUrl(Routes.baseUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(client)
                         .build()
 
                     val response = con.create(APIService::class.java).postLogin(
-                        "login",
-                        UserLogin(loginUsername.text.toString(), loginPassword.text.toString())
+                        loginUsername.text.toString(),
+                        loginPassword.text.toString()
                     )
 
                     if (response.isSuccessful) {
-                        val intent = Intent(this@LoginActivity, Menu::class.java)
-                        intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
-                        startActivity(intent)
+                        // Procesar la respuesta como lo desees
+                        val usuario = response.body()
+                        if (usuario != null) {
+                            runOnUiThread {
+                                val intent = Intent(this@LoginActivity, Menu::class.java)
+                                intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
+                                startActivity(intent)
+                            }
+                        } else {
+                            runOnUiThread {
+                                showLoginError()
+                            }
+                        }
                     } else {
                         runOnUiThread {
                             showLoginError()

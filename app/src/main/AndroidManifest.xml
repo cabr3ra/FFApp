@@ -15,9 +15,6 @@
         android:theme="@style/Theme.FFApp"
         tools:targetApi="31">
         <activity
-            android:name=".Comparator"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -39,7 +36,7 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".AboutUs"
+            android:name=".Comparator"
             android:exported="true"
             android:theme="@style/Theme.AppCompat" />
         <activity
@@ -47,7 +44,7 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".UserActivity"
+            android:name=".AboutUs"
             android:exported="true"
             android:theme="@style/Theme.AppCompat" />
 
