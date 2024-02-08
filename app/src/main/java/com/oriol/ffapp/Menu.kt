@@ -15,5 +15,17 @@ class Menu : AppCompatActivity() {
             val intent = Intent(this@Menu, AboutUs::class.java)
             startActivity(intent)
         }
+
+        val btnComparator = findViewById<AppCompatButton>(R.id.btnComparator)
+        btnComparator.setOnClickListener{
+            val intent = Intent(this@Menu, Comparator::class.java)
+            startActivity(intent)
+        }
+
+        val btnFruitShopList = findViewById<AppCompatButton>(R.id.btnFruitShopList)
+        btnFruitShopList.setOnClickListener{
+            val intent = Intent(this@Menu, FruitShopList::class.java)
+            startActivity(intent)
+        }
     }
 }

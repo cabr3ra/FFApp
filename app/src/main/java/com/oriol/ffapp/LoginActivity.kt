@@ -8,8 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
-import com.oriol.ffapp.model.User
+import com.oriol.ffapp.server.APIService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,13 +18,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var loginUsername : EditText
+    private lateinit var loginPassword : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        loginUsername = findViewById(R.id.loginUsername)
+        loginPassword = findViewById(R.id.loginPassword)
+
         val btnLogin = findViewById<Button>(R.id.loginButton)
         btnLogin.setOnClickListener{
-            val intent = Intent(this@LoginActivity, Menu::class.java)
+                postUserLogin(it)
+        }
+
+        val tvSignupRedirect = findViewById<TextView>(R.id.signupRedirect)
+        tvSignupRedirect.setOnClickListener{
+            val intent = Intent(this@LoginActivity, SignupActivity::class.java)
             startActivity(intent)
         }
 
@@ -33,46 +42,62 @@ class LoginActivity : AppCompatActivity() {
 
     //Passa a la siguiente pantalla una vez se introduzca el usuario y el pasword
     fun openUserActivity(view: View) {
-        val input = findViewById<TextView>(R.id.loginUsername)
-        val username = input.text;
-
-        if(username.isNotEmpty()) {
-            val intent = Intent(this, UserActivity::class.java)
-            intent.putExtra("NOM_PARAMETRE", username)
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, "Indica un username", Toast.LENGTH_SHORT).show()
+        if (validateFields()) {
+            postUserLogin(view)
         }
     }
 
     fun postUserLogin(view: View) {
-        val inputUsername = findViewById<EditText>(R.id.loginUsername)
-        val inputPassword = findViewById<EditText>(R.id.loginPassword)
+        if (validateFields()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val interceptor = HttpLoggingInterceptor()
+                    interceptor.level = HttpLoggingInterceptor.Level.BODY
+                    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        val userLogin = inputUsername.text.toString()
-        val passwordLogin = inputPassword.text.toString()
+                    val con = Retrofit.Builder().baseUrl(Rutes.baseUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(client)
+                        .build()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+                    val response = con.create(APIService::class.java).postLogin(
+                        "login",
+                        UserLogin(loginUsername.text.toString(), loginPassword.text.toString())
+                    )
 
-            val con = Retrofit.Builder().baseUrl(Rutes.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
-
-            val resposta = con.create(APIService::class.java).postLogin(
-                "login",
-                UserLogin(userLogin, passwordLogin)
-            )
-            if (resposta.isSuccessful) {
-                println("Obtenim la resposta!");
-                var user = resposta.body()?: User("", "","", "", "", false, false)
-                println(resposta.body())
-            } else {
-                println(resposta.errorBody()?.string())
+                    if (response.isSuccessful) {
+                        val intent = Intent(this@LoginActivity, Menu::class.java)
+                        intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
+                        startActivity(intent)
+                    } else {
+                        runOnUiThread {
+                            showLoginError()
+                            println(response.errorBody()?.string())
+                        }
+                    }
+                } catch (e: Exception) {
+                    runOnUiThread {
+                        showLoginError()
+                        e.printStackTrace()
+                    }
+                }
             }
         }
+    }
+
+    // Función para verificar si las credenciales son correctas
+    private fun validateFields(): Boolean {
+        val loginUser = loginUsername.text.toString()
+        val loginPassword = loginPassword.text.toString()
+
+        if (loginUser.isNotEmpty() && loginPassword.isNotEmpty()) {
+            return true
+        } else {
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+    }
+    private fun showLoginError() {
+        Toast.makeText(this@LoginActivity, "Login incorrecto", Toast.LENGTH_SHORT).show()
     }
 }

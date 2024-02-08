@@ -6,44 +6,36 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/tv_username"
+        android:id="@+id/tv_rv_fruitName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="username"
+        tools:text="Aqui el fruitname"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_rv_username"
+        android:id="@+id/tv_rv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="mgimena"
+        tools:text="Aqui el price"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username"/>
-    
-    <TextView
-        android:id="@+id/tv_rv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Aqui el nom"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_username"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitName"/>
 
     <TextView
-        android:id="@+id/tv_rv_surname"
+        android:id="@+id/tv_rv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Aqui el cognom"
+        tools:text="Aqui la description"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_name"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_price"/>
 
     <TextView
-        android:id="@+id/tv_rv_email"
+        android:id="@+id/tv_rv_fruitshop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Aqui el email"
+        tools:text="Aqui el fruitshop"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_surname"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_description"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

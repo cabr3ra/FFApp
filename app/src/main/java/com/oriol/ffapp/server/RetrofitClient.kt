@@ -1,11 +1,12 @@
-package com.oriol.ffapp
+package com.oriol.ffapp.server
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://172.18.4.97:8080/"
+    private const val BASE_URL = "http://192.168.22.103:8888/"
+    //private const val BASE_URL = "http://192.168.56.1:8080/"
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
