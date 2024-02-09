@@ -20,7 +20,7 @@
         tools:text="mgimena"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_username"/>
-    
+
     <TextView
         android:id="@+id/tv_rv_name"
         android:layout_width="wrap_content"
@@ -45,5 +45,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_rv_surname"/>
 
+    <TextView
+        android:id="@+id/tv_rv_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_email"/>
+
+    <TextView
+        android:id="@+id/tv_rv_baja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Baja"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_admin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

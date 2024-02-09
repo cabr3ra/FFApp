@@ -71,27 +71,19 @@ class LoginActivity : AppCompatActivity() {
                         // Procesar la respuesta como lo desees
                         val usuario = response.body()
                         if (usuario != null) {
-                            runOnUiThread {
                                 val intent = Intent(this@LoginActivity, Menu::class.java)
                                 intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
                                 startActivity(intent)
-                            }
                         } else {
-                            runOnUiThread {
                                 showLoginError()
-                            }
                         }
                     } else {
-                        runOnUiThread {
                             showLoginError()
                             println(response.errorBody()?.string())
-                        }
                     }
                 } catch (e: Exception) {
-                    runOnUiThread {
                         showLoginError()
                         e.printStackTrace()
-                    }
                 }
             }
         }

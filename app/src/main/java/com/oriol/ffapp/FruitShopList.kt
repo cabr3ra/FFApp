@@ -11,6 +11,7 @@ import com.oriol.ffapp.model.User
 import com.oriol.ffapp.model.UserProvider
 import com.oriol.ffapp.rvUser.UserRvAdapter
 import com.oriol.ffapp.server.APIService
+import com.oriol.ffapp.server.Routes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -44,13 +45,12 @@ class FruitShopList : AppCompatActivity() {
 
 
         lifecycleScope.launch(Dispatchers.Default) {
-            var connexio = Retrofit.Builder().baseUrl("http://192.168.22.103:8888/")
+            var con = Retrofit.Builder().baseUrl(Routes.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             withContext(Dispatchers.IO) {
                 try {
-                    var resposta = connexio.create(APIService::class.java).getUser("CARPETA_PHP/userGET.php")
-
+                    var resposta = con.create(APIService::class.java).getUser("userGET.php")
 
                     withContext(Dispatchers.Main) {
                         if (resposta.isSuccessful) {

@@ -1,5 +1,6 @@
 package com.oriol.ffapp.server
 
+
 import com.oriol.ffapp.UserLogin
 import com.oriol.ffapp.model.Fruit
 import com.oriol.ffapp.model.User
@@ -13,16 +14,21 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
+
 interface APIService {
+
 
     @GET
     suspend fun getUser(@Url url:String): Response<List<User>>
 
+
     @GET
     suspend fun getFruit(@Url url:String): Response<List<Fruit>>
 
+
     //@GET("{ruta}/userGET.php")
     //suspend fun getValues(@PATH("ruta") ruta:String, @Query("lletra") lletra:String): Response<List<User>>
+
 
     @Headers("Accept: application/json", "Content-Type: application/json")
     @POST("ruta/buscarUsersLogin")
@@ -31,10 +37,17 @@ interface APIService {
         @Query("password") password: String
     ): Response<User>
 
+
     @Headers("Accept: application/json", "Content-Type: application/json")
     @GET("ruta/buscarUsersLogin")
     suspend fun buscarUsersLogin(
         @Query("username") username: String,
         @Query("password") password: String
     ): Response<User>
+
+    @Headers("Accept: application/json", "Content-Type: application/json")
+    @POST("users/add")
+    suspend fun postRegister(@Body user: User): Response<String>
+
 }
+
