@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                         .client(client)
                         .build()
 
-                    val response = con.create(APIService::class.java).postLogin(
+                    val response = con.create(APIService::class.java).getLogin(
                         loginUsername.text.toString(),
                         loginPassword.text.toString()
                     )
