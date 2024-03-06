@@ -6,19 +6,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/tv_rv_fruitName"
+        android:id="@+id/tv_rv_fruitShopName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Aqui el name fruit"
+        tools:text="Aqui el name fruitShop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_rv_fruitDescription"
+        android:id="@+id/tv_rv_fruitShopLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Aqui el description fruit"
+        tools:text="Aqui el location fruitShop"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitName"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitShopName"/>
+
+    <TextView
+        android:id="@+id/tv_rv_fruitShopPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Aqui el phone fruitShop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitShopLocation"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

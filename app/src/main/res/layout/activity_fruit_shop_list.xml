@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/tvFruitShop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="FruitShopList"
@@ -18,20 +18,20 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUsers"
+        android:id="@+id/rvFruitShop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/svUsers"
+        app:layout_constraintTop_toBottomOf="@+id/svFruitShop"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/svUsers"
+        android:id="@+id/svFruitShop"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFruitShop" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

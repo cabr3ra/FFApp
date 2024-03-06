@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class Comparator : AppCompatActivity() {
-    var fruitList : MutableList<Fruit> = FruitProvider.fruits
+    var fruitList : MutableList<Fruit> = FruitProvider.fruit
     private lateinit var fruitRvAdapter: FruitRvAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class Comparator : AppCompatActivity() {
                 .build()
             withContext(Dispatchers.IO) {
                 try {
-                    var resposta = connexio.create(APIService::class.java).getFruit("CARPETA_PHP/fruitGET.php")
+                    var resposta = connexio.create(APIService::class.java).getFruits("CARPETA_PHP/fruitGET.php")
 
                     withContext(Dispatchers.Main) {
                         if (resposta.isSuccessful) {

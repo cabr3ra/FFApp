@@ -9,36 +9,24 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.oriol.ffapp.model.User
-import com.oriol.ffapp.server.APIService
-import com.oriol.ffapp.server.Routes
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
+import com.oriol.ffapp.server.RetrofitClient
+import retrofit2.Call
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var signupUsername: EditText
     private lateinit var signupPassword: EditText
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-
         signupUsername = findViewById(R.id.signupUsername)
         signupPassword = findViewById(R.id.signupPassword)
-
 
         val btnSignup = findViewById<Button>(R.id.signupButton)
         btnSignup.setOnClickListener {
             postUserRegister(it)
         }
-
 
         val tvLoginRedirect = findViewById<TextView>(R.id.loginRedirect)
         tvLoginRedirect.setOnClickListener {
@@ -47,80 +35,60 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-
     private fun postUserRegister(view: View) {
-        if (validateFields()) {
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    // El backend está hecho para que se registre con todas las variables, pero el frontend está hecho para que se registre solamente el username y el password
-                    val user = User(
-                        username = signupUsername.text.toString(),
-                        password = signupPassword.text.toString(),
-                        email = "Email",
-                        name = "Name",
-                        surname = "Surname",
-                        admin = false,
-                        baja = false
-                    )
+        val usernameText = signupUsername.text.toString()
+        val passwordText = signupPassword.text.toString()
 
+        if (validateFields(usernameText, passwordText)) {
+            val user = User(
+                username = usernameText,
+                password = passwordText,
+                email = "",
+                name = "",
+                surname = "",
+                admin = false,
+                baja = false
+            )
 
-                    val interceptor = HttpLoggingInterceptor()
-                    interceptor.level = HttpLoggingInterceptor.Level.BODY
-                    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-
-
-                    val con = Retrofit.Builder().baseUrl(Routes.baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(client)
-                        .build()
-
-
-                    val response = con.create(APIService::class.java).postRegister(user)
-
-
+            val call = RetrofitClient.apiService.postRegister(user)
+            call.enqueue(object : retrofit2.Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
                     if (response.isSuccessful) {
-                            val message = response.body()
-                            if (message != null) {
-                                Toast.makeText(this@SignupActivity, message, Toast.LENGTH_SHORT).show()
+                        // La solicitud fue exitosa
+                        println("Solicitud POST exitosa")
 
+                        val user = User(
+                            username = "Oriol",
+                            password = "123",
+                            email = "",
+                            name = "",
+                            surname = "",
+                            admin = false,
+                            baja = false
+                        )
 
-                                // Redirige a la pantalla de inicio de sesión
-                                val intent = Intent(this@SignupActivity, LoginActivity::class.java)
-                                startActivity(intent)
-                                finish() // Cierra la actividad actual para que no pueda volver atrás desde la pantalla de inicio de sesión
-                            } else {
-                                showRegisterError()
-                            }
+                        val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                        startActivity(intent)
                     } else {
-                            showRegisterError()
-                            println(response.errorBody()?.string())
+                        // La solicitud no fue exitosa
+                        println("Error en la solicitud POST: ${response.code()}")
                     }
-
-
-                } catch (e: Exception) {
-                        showRegisterError()
-                        e.printStackTrace()
                 }
-            }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    // Se produjo un error de red u otro tipo de error
+                    println("Error en la solicitud POST: ${t.message}")
+                }
+            })
         }
     }
 
-
-    private fun validateFields(): Boolean {
-        val signupUser = signupUsername.text.toString()
-        val signupPassword = signupPassword.text.toString()
-
-
-        return if (signupUser.isNotEmpty() && signupPassword.isNotEmpty()) {
+    private fun validateFields(username: String, password: String): Boolean {
+        return if (username.isNotEmpty() && password.isNotEmpty()) {
             true
         } else {
             Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             false
         }
-    }
-
-
-    private fun showRegisterError() {
-        Toast.makeText(this@SignupActivity, "Error al registrar usuario", Toast.LENGTH_SHORT).show()
     }
 }

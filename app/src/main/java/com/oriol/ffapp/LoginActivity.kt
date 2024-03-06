@@ -48,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Cambia la función postUserLogin para usar buscarUsersLogin
     fun postUserLogin(view: View) {
         if (validateFields()) {
             CoroutineScope(Dispatchers.IO).launch {
@@ -68,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
                     )
 
                     if (response.isSuccessful) {
-                        // Procesar la respuesta como lo desees
                         val usuario = response.body()
                         if (usuario != null) {
                                 val intent = Intent(this@LoginActivity, Menu::class.java)
@@ -102,6 +100,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun showLoginError() {
-        Toast.makeText(this@LoginActivity, "Login incorrecto", Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            Toast.makeText(this@LoginActivity, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+        }
     }
 }
