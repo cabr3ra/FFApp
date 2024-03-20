@@ -27,23 +27,15 @@ interface APIService {
     @GET
     suspend fun getFruitShops(@Url url:String): Response<List<FruitShop>>
 
-    @Headers("Accept: application/json", "Content-Type: application/json")
-    @POST("ruta/buscarUsersLogin")
+    @GET("SearchUserLogin")
     suspend fun postLogin(
         @Query("username") username: String,
         @Query("password") password: String
     ): Response<User>
 
     @Headers("Accept: application/json", "Content-Type: application/json")
-    @GET("ruta/buscarUsersLogin")
-    suspend fun getLogin(
-        @Query("username") username: String,
-        @Query("password") password: String
-    ): Response<User>
-
-    @Headers("Accept: application/json", "Content-Type: application/json")
     @POST("Users/add")
-     fun postRegister(@Body user: User): Call<Void>
+    fun postRegister(@Body user: User): Call<Void>
 
 }
 

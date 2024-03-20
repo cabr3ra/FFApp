@@ -13,7 +13,7 @@ class UserViewHolder(view: View):RecyclerView.ViewHolder(view) {
     val tv_rv_email = view.findViewById<TextView>(R.id.tv_rv_email)
 
     fun printUser(user: User){
-        tv_rv_username.text = user.username
+        tv_rv_username.text = user.username_user
         tv_rv_name.text = user.name
         tv_rv_surname.text = user.surname
         tv_rv_email.text = user.email

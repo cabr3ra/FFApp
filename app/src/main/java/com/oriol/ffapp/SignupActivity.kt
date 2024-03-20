@@ -15,7 +15,6 @@ import retrofit2.Call
 class SignupActivity : AppCompatActivity() {
     private lateinit var signupUsername: EditText
     private lateinit var signupPassword: EditText
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
@@ -41,8 +40,9 @@ class SignupActivity : AppCompatActivity() {
 
         if (validateFields(usernameText, passwordText)) {
             val user = User(
-                username = usernameText,
-                password = passwordText,
+                idUser = 0,
+                username_user = usernameText,
+                password_user = passwordText,
                 email = "",
                 name = "",
                 surname = "",
@@ -55,17 +55,7 @@ class SignupActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
                     if (response.isSuccessful) {
                         // La solicitud fue exitosa
-                        println("Solicitud POST exitosa")
-
-                        val user = User(
-                            username = "Oriol",
-                            password = "123",
-                            email = "",
-                            name = "",
-                            surname = "",
-                            admin = false,
-                            baja = false
-                        )
+                        println("Solicitud POST exitosa"+user.username_user+" "+user.password_user)
 
                         val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                         startActivity(intent)
