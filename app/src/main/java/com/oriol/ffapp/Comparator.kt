@@ -6,9 +6,9 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.oriol.ffapp.model.Fruit
-import com.oriol.ffapp.model.FruitProvider
-import com.oriol.ffapp.rvFruit.FruitRvAdapter
+import com.oriol.ffapp.model.Price
+import com.oriol.ffapp.model.PriceProvider
+import com.oriol.ffapp.rvPrice.PriceRvAdapter
 import com.oriol.ffapp.server.APIService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class Comparator : AppCompatActivity() {
-    var fruitList : MutableList<Fruit> = FruitProvider.fruit
-    private lateinit var fruitRvAdapter: FruitRvAdapter
+    var priceList : MutableList<Price> = PriceProvider.price
+    private lateinit var priceRvAdapter: PriceRvAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +29,10 @@ class Comparator : AppCompatActivity() {
         var nom = llista_extres?.get("NOM_PARAMETRE")
         println("NOM parametre: " + nom)
 
-        val rv_fruit = findViewById<RecyclerView>(R.id.rvFruits)
-        rv_fruit.layoutManager = LinearLayoutManager(this)
-        fruitRvAdapter = FruitRvAdapter(fruitList)
-        rv_fruit.adapter = fruitRvAdapter
+        val rv_price = findViewById<RecyclerView>(R.id.rvPrices)
+        rv_price.layoutManager = LinearLayoutManager(this)
+        priceRvAdapter = PriceRvAdapter(priceList)
+        rv_price.adapter = priceRvAdapter
 
         lifecycleScope.launch(Dispatchers.Default) {
             var connexio = Retrofit.Builder().baseUrl("http://192.168.22.103:8888/")
@@ -45,9 +45,9 @@ class Comparator : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         if (resposta.isSuccessful) {
                             val newFruit = resposta.body() ?: emptyList()
-                            fruitList.clear()
-                            fruitList.addAll(newFruit)
-                            fruitRvAdapter.notifyDataSetChanged()
+                            priceList.clear()
+                            priceList.addAll(newFruit)
+                            priceRvAdapter.notifyDataSetChanged()
                         }
                     }
                 } catch (e: Exception) {

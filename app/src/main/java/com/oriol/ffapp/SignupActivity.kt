@@ -41,8 +41,8 @@ class SignupActivity : AppCompatActivity() {
         if (validateFields(usernameText, passwordText)) {
             val user = User(
                 idUser = 0,
-                username_user = usernameText,
-                password_user = passwordText,
+                username = usernameText,
+                password = passwordText,
                 email = "",
                 name = "",
                 surname = "",
@@ -55,7 +55,7 @@ class SignupActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
                     if (response.isSuccessful) {
                         // La solicitud fue exitosa
-                        println("Solicitud POST exitosa"+user.username_user+" "+user.password_user)
+                        println("Solicitud POST exitosa "+ user.username + " " + user.password)
 
                         val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                         startActivity(intent)

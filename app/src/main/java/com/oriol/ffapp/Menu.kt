@@ -40,7 +40,7 @@ class Menu : AppCompatActivity() {
         println("Username paremetre: $nom")
 
         val textView = findViewById<TextView>(R.id.textViewTitle)
-        textView.text = getString(R.string.bienvenido) + nom
+        textView.text = getString(R.string.bienvenido) + " " + nom
 
     }
 }

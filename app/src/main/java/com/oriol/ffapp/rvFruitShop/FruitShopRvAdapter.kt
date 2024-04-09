@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.R
 import com.oriol.ffapp.model.FruitShop
 
-class FruitShopRvAdapter(private val fruitShops:List<FruitShop>)
+class FruitShopRvAdapter(private var fruitShops:List<FruitShop>)
     : RecyclerView.Adapter<FruitShopViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FruitShopViewHolder {
         val layoutInflate = LayoutInflater.from(parent.context)

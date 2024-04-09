@@ -5,8 +5,8 @@ data class User(
     val name: String?,
     val surname: String?,
     val email: String?,
-    val username_user: String?,
-    val password_user: String?,
+    val username: String?,
+    val password: String?,
     val admin: Boolean,
     val baja: Boolean
 

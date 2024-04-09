@@ -6,28 +6,34 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/tv_rv_fruitShopName"
+        android:id="@+id/tv_rv_fruitName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Aqui el name fruitShop"
+        tools:text="Aqui el name fruit"
+        app:layout_constraintStart_toEndOf="@id/tv_rv_fruitPrice"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_rv_fruitShopLocation"
+        android:id="@+id/tv_rv_fruitShopName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Aqui el location fruitShop"
+        tools:text="Aqui el name fruitShop"
+        app:layout_constraintStart_toEndOf="@id/tv_rv_fruitPrice"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitShopName"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitName"/>
 
     <TextView
-        android:id="@+id/tv_rv_fruitShopPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Aqui el phone fruitShop"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitShopLocation"/>
+        android:id="@+id/tv_rv_fruitPrice"
+        android:layout_width="80dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="3dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1.80" />
 
     <TextView
         android:id="@+id/textView"
@@ -36,6 +42,6 @@
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitShopPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_rv_fruitPrice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
