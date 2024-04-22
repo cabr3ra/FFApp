@@ -19,8 +19,8 @@ interface APIService {
 
     @GET
     suspend fun getUsers(@Url url:String): Response<List<User>>
-    @GET
-    suspend fun getFruits(@Url url:String): Response<List<Price>>
+    @GET("Prices")
+    suspend fun getPrices(@Url url:String): Response<List<Price>>
     @GET
     suspend fun getFruitShops(@Url url:String): Response<List<FruitShop>>
     @GET("Fruitshops")

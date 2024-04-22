@@ -1,98 +1,47 @@
 package com.oriol.ffapp
 
-
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.oriol.ffapp.model.Price
-import com.oriol.ffapp.model.PriceProvider
 import com.oriol.ffapp.rvPrice.PriceRvAdapter
-import com.oriol.ffapp.server.APIService
+import com.oriol.ffapp.server.RetrofitClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
 
 class Comparator : AppCompatActivity() {
-    var priceList : MutableList<Price> = PriceProvider.price
     private lateinit var priceRvAdapter: PriceRvAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comparator)
 
-        var llista_extres = intent.extras
-        var nom = llista_extres?.get("NOM_PARAMETRE")
-        println("NOM parametre: " + nom)
+        // Obtiene los extras de la intención
+        val extras = intent.extras
+        val nom = extras?.getString("NOM_PARAMETRE")
+        println("NOM parametre: $nom")
 
-        val rv_price = findViewById<RecyclerView>(R.id.rvPrices)
-        rv_price.layoutManager = LinearLayoutManager(this)
-        priceRvAdapter = PriceRvAdapter(priceList)
-        rv_price.adapter = priceRvAdapter
+        // Configura el RecyclerView
+        val rvPrices = findViewById<RecyclerView>(R.id.rvPrices)
+        rvPrices.layoutManager = LinearLayoutManager(this)
+        priceRvAdapter = PriceRvAdapter(emptyList())
+        rvPrices.adapter = priceRvAdapter
 
-        lifecycleScope.launch(Dispatchers.Default) {
-            var connexio = Retrofit.Builder().baseUrl("http://192.168.22.103:8888/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            withContext(Dispatchers.IO) {
-                try {
-                    var resposta = connexio.create(APIService::class.java).getFruits("CARPETA_PHP/fruitGET.php")
-
+        // Obtiene los datos de la API y los establece en el adaptador
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitClient.apiService.getPrices("Prices")
+                if (response.isSuccessful) {
+                    val prices = response.body() ?: emptyList()
                     withContext(Dispatchers.Main) {
-                        if (resposta.isSuccessful) {
-                            val newFruit = resposta.body() ?: emptyList()
-                            priceList.clear()
-                            priceList.addAll(newFruit)
-                            priceRvAdapter.notifyDataSetChanged()
-                        }
+                        priceRvAdapter.setData(prices)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
-
-
-        /*
-               var searchView = findViewById<SearchView>(R.id.svFruits)
-               searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener) {
-                   override fun onQueryTextChange(newText: String?) Boolean {
-                   return true;
-                   }
-                   override fun onQueryTextSubmit(query: String?) Boolean {
-                       if(!query?.isNullOnEmpty()!!){
-                           getUserByName(query)
-                       }
-                       return true;
-                   }
-               }
-
-
-           }
-
-
-           private fun getUserByName(query:String) {
-               lifecycleScope.launch {
-                   var connexio = Retrofit.Builder().baseUrl("http://192.168.22.103:8888/")
-                       .addConverterFactory(GsonConverterFactory.create())
-                       .build()
-                       var resposta = connexio.create(APIService::class.java).getFruit("clients", query)
-
-
-                       withContext(Dispatchers.Main) {
-                           if (resposta.isSuccessful) {
-                               val newFruit = resposta.body() ?: emptyList()
-                               fruitList.clear()
-                               fruitList.addAll(newUser)
-                               fruitRvAdapter.notifyDataSetChanged()
-                           }
-                       }
-
-               }
-               */
     }
 }
