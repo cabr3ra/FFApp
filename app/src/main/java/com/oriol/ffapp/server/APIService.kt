@@ -34,5 +34,8 @@ interface APIService {
         @Query("password") password: String
     ): Response<User>
 
+    @POST("register")
+    fun postRegister(@Body user: User): Call<Void>
+
 }
 

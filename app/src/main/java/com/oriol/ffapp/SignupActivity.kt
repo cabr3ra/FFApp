@@ -15,7 +15,7 @@ import retrofit2.Call
 class SignupActivity : AppCompatActivity() {
     private lateinit var signupUsername: EditText
     private lateinit var signupPassword: EditText
-    /*
+
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -84,5 +84,5 @@ private fun validateFields(username: String, password: String): Boolean {
     }
 }
 
-*/
+
 }
