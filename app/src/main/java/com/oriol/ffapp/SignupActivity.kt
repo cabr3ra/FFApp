@@ -15,70 +15,74 @@ import retrofit2.Call
 class SignupActivity : AppCompatActivity() {
     private lateinit var signupUsername: EditText
     private lateinit var signupPassword: EditText
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+    /*
 
-        signupUsername = findViewById(R.id.signupUsername)
-        signupPassword = findViewById(R.id.signupPassword)
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_signup)
 
-        val btnSignup = findViewById<Button>(R.id.signupButton)
-        btnSignup.setOnClickListener {
-            postUserRegister(it)
-        }
+    signupUsername = findViewById(R.id.signupUsername)
+    signupPassword = findViewById(R.id.signupPassword)
 
-        val tvLoginRedirect = findViewById<TextView>(R.id.loginRedirect)
-        tvLoginRedirect.setOnClickListener {
-            val intent = Intent(this@SignupActivity, LoginActivity::class.java)
-            startActivity(intent)
-        }
+    val btnSignup = findViewById<Button>(R.id.signupButton)
+    btnSignup.setOnClickListener {
+        postUserRegister(it)
     }
 
-    private fun postUserRegister(view: View) {
-        val usernameText = signupUsername.text.toString()
-        val passwordText = signupPassword.text.toString()
+    val tvLoginRedirect = findViewById<TextView>(R.id.loginRedirect)
+    tvLoginRedirect.setOnClickListener {
+        val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+        startActivity(intent)
+    }
+}
 
-        if (validateFields(usernameText, passwordText)) {
-            val user = User(
-                idUser = 0,
-                username = usernameText,
-                password = passwordText,
-                email = "",
-                name = "",
-                surname = "",
-                admin = false,
-                baja = false
-            )
+private fun postUserRegister(view: View) {
+    val usernameText = signupUsername.text.toString()
+    val passwordText = signupPassword.text.toString()
 
-            val call = RetrofitClient.apiService.postRegister(user)
-            call.enqueue(object : retrofit2.Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
-                    if (response.isSuccessful) {
-                        // La solicitud fue exitosa
-                        println("Solicitud POST exitosa "+ user.username + " " + user.password)
+    if (validateFields(usernameText, passwordText)) {
+        val user = User(
+            idUser = 0,
+            username = usernameText,
+            password = passwordText,
+            email = "",
+            name = "",
+            surname = "",
+            admin = false,
+            baja = false
+        )
 
-                        val intent = Intent(this@SignupActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        // La solicitud no fue exitosa
-                        println("Error en la solicitud POST: ${response.code()}")
-                    }
+        val call = RetrofitClient.apiService.postRegister(user)
+        call.enqueue(object : retrofit2.Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
+                if (response.isSuccessful) {
+                    // La solicitud fue exitosa
+                    println("Solicitud POST exitosa "+ user.username + " " + user.password)
+
+                    val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    // La solicitud no fue exitosa
+                    println("Error en la solicitud POST: ${response.code()}")
                 }
+            }
 
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    // Se produjo un error de red u otro tipo de error
-                    println("Error en la solicitud POST: ${t.message}")
-                }
-            })
-        }
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                // Se produjo un error de red u otro tipo de error
+                println("Error en la solicitud POST: ${t.message}")
+            }
+        })
     }
+}
 
-    private fun validateFields(username: String, password: String): Boolean {
-        return if (username.isNotEmpty() && password.isNotEmpty()) {
-            true
-        } else {
-            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
-            false
-        }
+private fun validateFields(username: String, password: String): Boolean {
+    return if (username.isNotEmpty() && password.isNotEmpty()) {
+        true
+    } else {
+        Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+        false
     }
+}
+
+*/
 }

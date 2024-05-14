@@ -12,8 +12,8 @@ class FruitShopViewHolder(view: View):RecyclerView.ViewHolder(view) {
     val tv_rv_fruitShopPhone = view.findViewById<TextView>(R.id.tv_rv_fruitShopPhone)
 
     fun printFruit(fruit: FruitShop){
-        tv_rv_fruitShopName.text = fruit.fruitShopName
-        tv_rv_fruitShopLocation.text = fruit.fruitShopLocation
-        tv_rv_fruitShopPhone.text = fruit.fruitShopPhone
+        tv_rv_fruitShopName.text = fruit.nameFruitShop
+        tv_rv_fruitShopLocation.text = fruit.locationFruitShop
+        tv_rv_fruitShopPhone.text = fruit.phoneFruitShop
     }
 }

@@ -1,4 +1,3 @@
-
 package com.oriol.ffapp.rvPrice
 
 import android.view.LayoutInflater
@@ -28,3 +27,4 @@ class PriceRvAdapter(private var prices: List<Price>)
         return prices.size
     }
 }
+

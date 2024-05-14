@@ -16,25 +16,23 @@ import retrofit2.http.Url
 
 interface APIService {
 
+    @GET("FruitShops")
+    suspend fun getFruitShops(): Response<List<FruitShop>>
+
+    @GET("FruitShops/search")
+    suspend fun searchFruitShopsByName(@Query("name") name: String): Response<List<FruitShop>>
+
+    @GET("PricesWithName")
+    suspend fun getPricesWithNames(): Response<List<List<Any>>>
 
     @GET
     suspend fun getUsers(@Url url:String): Response<List<User>>
-    @GET("Prices")
-    suspend fun getPrices(@Url url:String): Response<List<Price>>
-    @GET
-    suspend fun getFruitShops(@Url url:String): Response<List<FruitShop>>
-    @GET("Fruitshops")
-    suspend fun getFruitShops1(): Response<List<FruitShop>>
 
     @GET("SearchUserLogin")
     suspend fun postLogin(
         @Query("username") username: String,
         @Query("password") password: String
     ): Response<User>
-
-    @Headers("Accept: application/json", "Content-Type: application/json")
-    @POST("Users/add")
-    fun postRegister(@Body user: User): Call<Void>
 
 }
 

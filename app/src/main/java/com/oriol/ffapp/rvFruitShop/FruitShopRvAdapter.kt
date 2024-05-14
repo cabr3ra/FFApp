@@ -21,4 +21,10 @@ class FruitShopRvAdapter(private var fruitShops:List<FruitShop>)
     override fun getItemCount(): Int {
         return fruitShops.size
     }
+
+    // Function to update the list of fruit shops
+    fun updateFruitShops(newFruitShops: List<FruitShop>) {
+        fruitShops = newFruitShops
+        notifyDataSetChanged()
+    }
 }
