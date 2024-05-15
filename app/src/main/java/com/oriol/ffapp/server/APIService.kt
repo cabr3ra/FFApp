@@ -9,7 +9,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 
 interface APIService {
@@ -22,6 +21,9 @@ interface APIService {
 
     @GET("PricesWithName")
     suspend fun getPricesWithNames(): Response<List<List<Any>>>
+
+    @GET("Prices/search")
+    suspend fun searchComparatorByName(@Query("name") name: String): Response<List<List<Any>>>
 
     //@GET
     //suspend fun getUsers(@Url url:String): Response<List<User>>

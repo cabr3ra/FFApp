@@ -1,4 +1,4 @@
-package com.oriol.ffapp
+package com.oriol.ffapp.model
 
 data class UserLogin(
     val loginUsername:String,

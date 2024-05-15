@@ -15,20 +15,15 @@ class PriceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val ivFruitImage: ImageView = itemView.findViewById(R.id.iv_rv_fruitImage)
 
     fun bind(price: Price) {
-        itemView.apply {
-            tvFruitName.text = price.fruitName
-            tvFruitShopName.text = price.fruitShopName
-            tvFruitPrice.text = price.fruitPrice.toString()
+        tvFruitName.text = price.fruitName
+        tvFruitShopName.text = price.fruitShopName
+        tvFruitPrice.text = price.fruitPrice.toString()
 
-            // Obtener el recurso de imagen correspondiente al nombre de la fruta
-            val fruitImageResource = getFruitImageResource(price.fruitName)
-            fruitImageResource?.let {
-                // Si se encuentra el recurso se carga en el ImageView usando Glide
-                Glide.with(this).load(it).into(ivFruitImage)
-            } ?: run {
-                // Si no se encuentra se establecer una imagen predeterminada
-                ivFruitImage.setImageResource(R.drawable.frutas)
-            }
+        val fruitImageResource = getFruitImageResource(price.fruitName)
+        fruitImageResource?.let {
+            Glide.with(itemView.context).load(it).into(ivFruitImage)
+        } ?: run {
+            ivFruitImage.setImageResource(R.drawable.frutas)
         }
     }
 
@@ -56,6 +51,3 @@ class PriceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 }
-
-
-

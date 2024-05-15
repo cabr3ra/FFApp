@@ -34,6 +34,20 @@ class FruitShopList : AppCompatActivity() {
         rvFruitShop.adapter = fruitShopRvAdapter
     }
 
+    private fun loadFruitShops() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val response = apiService.getFruitShops()
+            if (response.isSuccessful) {
+                val fruitShops = response.body()
+                fruitShops?.let {
+                    fruitShopRvAdapter.updateFruitShops(it)
+                }
+            } else {
+                println("ERROR")
+            }
+        }
+    }
+
     private fun setupSearchView() {
         val searchView = findViewById<SearchView>(R.id.svFruitShop)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -47,20 +61,6 @@ class FruitShopList : AppCompatActivity() {
                 return true
             }
         })
-    }
-
-    private fun loadFruitShops() {
-        GlobalScope.launch(Dispatchers.Main) {
-            val response = apiService.getFruitShops()
-            if (response.isSuccessful) {
-                val fruitShops = response.body()
-                fruitShops?.let {
-                    fruitShopRvAdapter.updateFruitShops(it)
-                }
-            } else {
-                println("ERROR")
-            }
-        }
     }
 
     private fun searchFruitShops(query: String) {

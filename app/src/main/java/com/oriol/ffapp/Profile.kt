@@ -1,11 +1,13 @@
 package com.oriol.ffapp
 
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.model.UserProvider
 import com.oriol.ffapp.rvUser.UserRvAdapter
+
 
 class Profile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

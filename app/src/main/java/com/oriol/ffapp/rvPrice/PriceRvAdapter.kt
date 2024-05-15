@@ -26,4 +26,3 @@ class PriceRvAdapter(private var prices: List<Price>) : RecyclerView.Adapter<Pri
         return prices.size
     }
 }
-
