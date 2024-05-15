@@ -2,7 +2,6 @@ package com.oriol.ffapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -52,39 +51,38 @@ class LoginActivity : AppCompatActivity() {
     fun postUserLogin(view: View) {
         if (validateFields()) {
             CoroutineScope(Dispatchers.IO).launch {
-                    val interceptor = HttpLoggingInterceptor()
-                    interceptor.level = HttpLoggingInterceptor.Level.BODY
-                    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+                val interceptor = HttpLoggingInterceptor()
+                interceptor.level = HttpLoggingInterceptor.Level.BODY
+                val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-                    val con = Retrofit.Builder().baseUrl(Routes.baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(client)
-                        .build()
+                val con = Retrofit.Builder().baseUrl(Routes.baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build()
 
-                    val response = con.create(APIService::class.java).postLogin(
-                        loginUsername.text.toString(),
-                        loginPassword.text.toString()
-                    )
+                val response = con.create(APIService::class.java).postLogin(
+                    loginUsername.text.toString(),
+                    loginPassword.text.toString()
+                )
 
-                    if (response.isSuccessful) {
-                        println("Login successful!")
-                        val usuario = response.body()
-                        if (usuario != null) {
-                            val intent = Intent(this@LoginActivity, Menu::class.java)
-                            intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
-                            startActivity(intent)
-                        } else {
-                            showLoginError()
-                            println("error")
-                        }
-                    } else {
-                        showLoginError()
-                        println(response.errorBody()?.string())
-                        println("Login not successful!")
+                if (response.isSuccessful) {
+                    println("Login successful!")
+                    val usuario = response.body()
+                    if (usuario != null) {
+                        val intent = Intent(this@LoginActivity, Menu::class.java)
+                        intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
+                        startActivity(intent)
                     }
+                    // No hacemos nada aquí si el usuario es nulo, lo que significa que permanecerá en la misma página
+                } else {
+                    showLoginError()
+                    println(response.errorBody()?.string())
+                    println("Login not successful!")
+                }
             }
         }
     }
+
 
     // Función para verificar si las credenciales son correctas
     private fun validateFields(): Boolean {
