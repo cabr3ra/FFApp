@@ -3,7 +3,16 @@ package com.oriol.ffapp.model
 class UserProvider {
     companion object {
         val users = mutableListOf<User>(
-            User(0,"", "", "", "", "", false, false),
+            User(
+                idUser = 0,
+                usernameUser = "",
+                passwordUser = "",
+                emailUser = "",
+                nameUser = "",
+                surnameUser = "",
+                adminUser = 0,
+                bajaUser = 0
+            )
         )
     }
 }

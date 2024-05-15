@@ -1,14 +1,12 @@
 package com.oriol.ffapp.server
 
 
-import com.oriol.ffapp.model.Price
 import com.oriol.ffapp.model.FruitShop
 import com.oriol.ffapp.model.User
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Url
@@ -25,8 +23,8 @@ interface APIService {
     @GET("PricesWithName")
     suspend fun getPricesWithNames(): Response<List<List<Any>>>
 
-    @GET
-    suspend fun getUsers(@Url url:String): Response<List<User>>
+    //@GET
+    //suspend fun getUsers(@Url url:String): Response<List<User>>
 
     @GET("SearchUserLogin")
     suspend fun postLogin(
@@ -34,7 +32,7 @@ interface APIService {
         @Query("password") password: String
     ): Response<User>
 
-    @POST("register")
+    @POST("Users/add")
     fun postRegister(@Body user: User): Call<Void>
 
 }

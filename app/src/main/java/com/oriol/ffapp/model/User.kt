@@ -2,12 +2,11 @@ package com.oriol.ffapp.model
 
 data class User(
     val idUser: Int?,
-    val name: String?,
-    val surname: String?,
-    val email: String?,
-    val username: String?,
-    val password: String?,
-    val admin: Boolean,
-    val baja: Boolean
-
+    val nameUser: String?,
+    val surnameUser: String?,
+    val emailUser: String?,
+    val usernameUser: String?,
+    val passwordUser: String?,
+    val adminUser: Byte,
+    val bajaUser: Byte
 )
