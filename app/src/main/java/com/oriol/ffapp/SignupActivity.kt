@@ -45,8 +45,8 @@ class SignupActivity : AppCompatActivity() {
                 usernameUser = usernameText,
                 passwordUser = passwordText,
                 emailUser = null,
-                nameUser = "awe",
-                surnameUser = "sgadsg",
+                nameUser = "",
+                surnameUser = "",
                 adminUser = 1,
                 bajaUser = 0
             )
