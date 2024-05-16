@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 
 class Menu : AppCompatActivity() {
-    private var LoggedIn: Boolean = true // Variable que indica si el usuario ha iniciado sesión correctamente
+    private var LoggedIn: Boolean = false // Variable que indica si el usuario ha iniciado sesión correctamente
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +16,11 @@ class Menu : AppCompatActivity() {
 
         val btnProfile = findViewById<AppCompatButton>(R.id.btnProfile)
 
-        // Controlar la visibilidad del botón de perfil según el estado de inicio de sesión
-        if (LoggedIn) {
+        val llista_extres = intent.extras
+        val nom = llista_extres?.getString("USERNAME_PARAMETRE")
+        val isLoggedIn = llista_extres?.getBoolean("LoggedIn", false) ?: false
+
+        if (isLoggedIn) {
             btnProfile.visibility = View.VISIBLE
             btnProfile.setOnClickListener{
                 val intent = Intent(this@Menu, Profile::class.java)
@@ -45,11 +48,10 @@ class Menu : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val llista_extres = intent.extras
-        val nom = llista_extres?.getString("USERNAME_PARAMETRE")
-        println("Username paremetre: $nom")
-
         val textView = findViewById<TextView>(R.id.textViewTitle)
         textView.text = getString(R.string.bienvenido) + " " + nom
+        if (nom != null){
+            textView.text = getString(R.string.bienvenido) + " " + nom
+        }
     }
 }
