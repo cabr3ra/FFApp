@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatEditText
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +12,7 @@ class MainActivity : ComponentActivity() {
 
         val btnStart = findViewById<AppCompatButton>(R.id.btnStart)
         btnStart.setOnClickListener{
-            val intent = Intent(this@MainActivity, Menu::class.java)
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
         }
 

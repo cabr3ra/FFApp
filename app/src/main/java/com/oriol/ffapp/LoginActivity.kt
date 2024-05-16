@@ -1,3 +1,4 @@
+// LoginActivity.kt
 package com.oriol.ffapp
 
 import android.content.Intent
@@ -41,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Passa a la siguiente pantalla una vez se introduzca el usuario y el pasword
     fun openUserActivity(view: View) {
         if (validateFields()) {
             postUserLogin(view)
@@ -71,9 +71,10 @@ class LoginActivity : AppCompatActivity() {
                     if (usuario != null) {
                         val intent = Intent(this@LoginActivity, Menu::class.java)
                         intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
+                        // Modificar el valor de la variable según corresponda
+                        intent.putExtra("LoggedIn", true) // O false, dependiendo de tu lógica de negocio
                         startActivity(intent)
                     }
-                    // No hacemos nada aquí si el usuario es nulo, lo que significa que permanecerá en la misma página
                 } else {
                     showLoginError()
                     println(response.errorBody()?.string())
@@ -83,8 +84,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
-    // Función para verificar si las credenciales son correctas
     private fun validateFields(): Boolean {
         val loginUser = loginUsername.text.toString()
         val loginPassword = loginPassword.text.toString()
