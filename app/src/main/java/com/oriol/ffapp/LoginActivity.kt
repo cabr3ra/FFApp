@@ -35,6 +35,12 @@ class LoginActivity : AppCompatActivity() {
             postUserLogin(it)
         }
 
+        val btnLoginGuest = findViewById<TextView>(R.id.loginRedirect)
+        btnLoginGuest.setOnClickListener{
+            val intent = Intent(this@LoginActivity, Menu::class.java)
+            startActivity(intent)
+        }
+
         val tvSignupRedirect = findViewById<TextView>(R.id.signupRedirect)
         tvSignupRedirect.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
