@@ -1,6 +1,8 @@
 package com.oriol.ffapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -9,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.rvUser.UserRvAdapter
 import com.oriol.ffapp.server.RetrofitClient
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
 
 class Profile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +19,12 @@ class Profile : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewProfiles)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        /*val btnBaja = findViewById<Button>(R.id.btn_baja)
+        btnBaja.setOnClickListener {
+            val intent = Intent(this@Profile, LoginActivity::class.java)
+            startActivity(intent)
+        }*/
 
         lifecycleScope.launch {
 
