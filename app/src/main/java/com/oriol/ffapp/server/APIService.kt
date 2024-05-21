@@ -26,8 +26,8 @@ interface APIService {
     @GET("Prices/search")
     suspend fun searchComparatorByName(@Query("name") name: String): Response<List<List<Any>>>
 
-    //@GET
-    //suspend fun getUsers(@Url url:String): Response<List<User>>
+    @GET("Users")
+    suspend fun getUsers(): Response<List<User>>
 
     @GET("SearchUserLogin")
     suspend fun postLogin(
