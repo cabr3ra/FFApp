@@ -32,17 +32,17 @@
 
     <TextView
         android:id="@+id/tv_rv_fruitPrice"
-        android:layout_width="80dp"
+        android:layout_width="125dp"
         android:layout_height="36dp"
         android:fontFamily="@font/montserrat_bold"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textViewBot"
         app:layout_constraintStart_toEndOf="@+id/iv_rv_fruitImage"
         app:layout_constraintTop_toBottomOf="@+id/textViewTop"
-        tools:text="1.80" />
+        tools:text="1.80 €/Kg" />
 
 
     <TextView

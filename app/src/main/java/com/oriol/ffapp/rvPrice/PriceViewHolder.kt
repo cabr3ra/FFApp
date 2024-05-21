@@ -17,7 +17,7 @@ class PriceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(price: Price) {
         tvFruitName.text = price.fruitName
         tvFruitShopName.text = price.fruitShopName
-        tvFruitPrice.text = price.fruitPrice.toString()
+        tvFruitPrice.text = "${price.fruitPrice} €/Kg"
 
         val fruitImageResource = getFruitImageResource(price.fruitName)
         fruitImageResource?.let {
