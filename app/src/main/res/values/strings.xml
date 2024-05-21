@@ -3,10 +3,10 @@
     <string name="title">Fruta Facil</string>
     <string name="description">Comparador de precios de frutas en fruterias locales</string>
     <string name="menu">MENU</string>
-    <string name="comparator">comparator</string>
-    <string name="fruitshoplist">fruit shop list</string>
+    <string name="comparator">Comparador</string>
+    <string name="fruitshoplist">Fruterias</string>
     <string name="profile">profile</string>
-    <string name="about_us">ABOUT US</string>
+    <string name="about_us">Sobre nosotros</string>
     <string name="bienvenido">Hola</string>
     <string name="about_us_description1">
     Somos Yanis, Sergi y Oriol, y juntos somos "Operación YSO".</string>
