@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".Profile">
-
+    android:padding="16dp">
+    <!-- RecyclerView para mostrar los datos del usuario -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProfiles"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="16dp"
-        tools:listitem="@layout/rv_user_layout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre" />
+
+        <EditText
+            android:id="@+id/editSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido" />
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email" />
+
+        <EditText
+            android:id="@+id/editUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre de usuario" />
+
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_modificar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modificar datos" />
+
 
     <Button
         android:id="@+id/btn_baja"
@@ -21,4 +60,15 @@
         android:text="Baja"
         android:layout_gravity="center"
         android:layout_margin="16dp" />
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar sesión"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
+    </LinearLayout>
+
+
+
