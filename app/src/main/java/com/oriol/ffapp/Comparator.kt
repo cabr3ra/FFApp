@@ -1,6 +1,7 @@
 package com.oriol.ffapp
 
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import kotlinx.coroutines.withContext
 class Comparator : AppCompatActivity() {
     private lateinit var priceRvAdapter: PriceRvAdapter
     private lateinit var apiService: APIService
+    private var isSortedAsc: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,7 @@ class Comparator : AppCompatActivity() {
 
         setupRecyclerView()
         setupSearchView()
+        setupSortButton()
         loadPrices()
     }
 
@@ -37,16 +40,35 @@ class Comparator : AppCompatActivity() {
     }
 
     private fun loadPrices() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch {
             val response = apiService.getPricesWithNames()
-            if (response.isSuccessful) {
-                val rawList = response.body() ?: emptyList()
-                val prices = rawList.map { Price.fromArray(it) }
-                withContext(Dispatchers.Main) {
-                    priceRvAdapter.setData(prices)
-                }
+            val rawList = response.body() ?: emptyList()
+            val prices = rawList.map { Price.fromArray(it) }
+            withContext(Dispatchers.Main) {
+                priceRvAdapter.setData(prices)
+            }
+        }
+    }
+
+    private fun setupSortButton() {
+        val sortButton = findViewById<ImageButton>(R.id.sortButton)
+        sortButton.setOnClickListener {
+            isSortedAsc = !isSortedAsc
+            sortPrices()
+        }
+    }
+
+    private fun sortPrices() {
+        lifecycleScope.launch {
+            val response = if (isSortedAsc) {
+                apiService.getPriceAsc()
             } else {
-                println("Error")
+                apiService.getPriceDesc()
+            }
+            val rawList = response.body() ?: emptyList()
+            val sortedPrices = rawList.map { Price.fromArray(it) }
+            withContext(Dispatchers.Main) {
+                priceRvAdapter.setData(sortedPrices)
             }
         }
     }
@@ -71,19 +93,13 @@ class Comparator : AppCompatActivity() {
     }
 
     private fun searchFruits(query: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch {
             val response = apiService.searchComparatorByName(query)
-            if (response.isSuccessful) {
-                val rawList = response.body() ?: emptyList()
-                val prices = rawList.map { Price.fromArray(it) }
-                withContext(Dispatchers.Main) {
-                    priceRvAdapter.setData(prices)
-                }
-            } else {
-                println("ERROR")
+            val rawList = response.body() ?: emptyList()
+            val prices = rawList.map { Price.fromArray(it) }
+            withContext(Dispatchers.Main) {
+                priceRvAdapter.setData(prices)
             }
         }
     }
 }
-
-

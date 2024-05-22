@@ -49,9 +49,10 @@ class Menu : AppCompatActivity() {
         }
 
         val textView = findViewById<TextView>(R.id.textViewTitle)
-        textView.text = getString(R.string.bienvenido) + " " + nom
         if (nom != null){
             textView.text = getString(R.string.bienvenido) + " " + nom
+        } else{
+            textView.text = getString(R.string.bienvenido)
         }
     }
 }

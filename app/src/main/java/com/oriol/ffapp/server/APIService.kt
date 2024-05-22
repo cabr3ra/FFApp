@@ -25,6 +25,12 @@ interface APIService {
     @GET("PricesWithName")
     suspend fun getPricesWithNames(): Response<List<List<Any>>>
 
+    @GET("PricesSortedAsc")
+    suspend fun getPriceAsc(): Response<List<List<Any>>>
+
+    @GET("PricesSortedDesc")
+    suspend fun getPriceDesc(): Response<List<List<Any>>>
+
     @GET("Prices/search")
     suspend fun searchComparatorByName(@Query("name") name: String): Response<List<List<Any>>>
 
