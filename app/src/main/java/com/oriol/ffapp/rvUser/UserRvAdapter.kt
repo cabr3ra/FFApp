@@ -25,8 +25,6 @@ class UserRvAdapter(
         holder.name.text = currentUser.nameUser
         holder.surname.text = currentUser.surnameUser
         holder.email.text = currentUser.emailUser
-        holder.admin.text = currentUser.adminUser.toString()
-        holder.baja.text = currentUser.bajaUser.toString()
 
         holder.itemView.setOnClickListener {
             onUserClick(currentUser)

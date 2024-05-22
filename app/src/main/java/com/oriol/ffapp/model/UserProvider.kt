@@ -9,9 +9,7 @@ class UserProvider {
                 passwordUser = "",
                 emailUser = "",
                 nameUser = "",
-                surnameUser = "",
-                adminUser = 0,
-                bajaUser = 0
+                surnameUser = ""
             )
         )
     }

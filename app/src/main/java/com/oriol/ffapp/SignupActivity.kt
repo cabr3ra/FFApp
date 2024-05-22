@@ -46,9 +46,7 @@ class SignupActivity : AppCompatActivity() {
                 passwordUser = passwordText,
                 emailUser = null,
                 nameUser = "",
-                surnameUser = "",
-                adminUser = 1,
-                bajaUser = 0
+                surnameUser = ""
             )
 
             val call = RetrofitClient.apiService.postRegister(user)

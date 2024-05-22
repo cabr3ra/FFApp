@@ -7,6 +7,4 @@ data class User(
     val emailUser: String?,
     val usernameUser: String?,
     val passwordUser: String?,
-    val adminUser: Byte,
-    val bajaUser: Byte
 )
