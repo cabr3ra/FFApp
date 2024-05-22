@@ -1,6 +1,6 @@
-// LoginActivity.kt
 package com.oriol.ffapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -75,10 +75,17 @@ class LoginActivity : AppCompatActivity() {
                     println("Login successful!")
                     val usuario = response.body()
                     if (usuario != null) {
-                        val intent = Intent(this@LoginActivity, Menu::class.java)
-                        intent.putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
-                        // Modificar el valor de la variable según corresponda
-                        intent.putExtra("LoggedIn", true) // O false, dependiendo de tu lógica de negocio
+                        // Guardar userId en SharedPreferences
+                        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                        with(sharedPreferences.edit()) {
+                            putInt("USER_ID", usuario.idUser!!)
+                            apply()
+                        }
+
+                        val intent = Intent(this@LoginActivity, Menu::class.java).apply {
+                            putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
+                            putExtra("LoggedIn", true)
+                        }
                         startActivity(intent)
                     }
                 } else {

@@ -44,6 +44,6 @@ interface APIService {
     suspend fun putUpdateUser(@Body user: User): Response<Void>
 
     @DELETE("Users/delete/{userId}")
-    suspend fun deleteUser(@Path("userId") userId: Long): Response<String>
+    suspend fun deleteUser(@Path("userId") userId: Int): Response<Void>
 }
 

@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.model.User
 import com.oriol.ffapp.R
 
-class UserRvAdapter(private val userList: List<User>) :
-    RecyclerView.Adapter<UserViewHolder>() {
+class UserRvAdapter(
+    private val userList: List<User>,
+    private val onUserClick: (User) -> Unit
+) : RecyclerView.Adapter<UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.rv_user_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_user_layout, parent, false)
         return UserViewHolder(itemView)
     }
 
@@ -26,6 +27,10 @@ class UserRvAdapter(private val userList: List<User>) :
         holder.email.text = currentUser.emailUser
         holder.admin.text = currentUser.adminUser.toString()
         holder.baja.text = currentUser.bajaUser.toString()
+
+        holder.itemView.setOnClickListener {
+            onUserClick(currentUser)
+        }
     }
 
     override fun getItemCount(): Int {
