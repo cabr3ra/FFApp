@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oriol.ffapp.model.User
 import com.oriol.ffapp.rvUser.UserRvAdapter
 import com.oriol.ffapp.server.APIService
 import com.oriol.ffapp.server.RetrofitClient
@@ -25,43 +26,50 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Profile : AppCompatActivity() {
 
-    private var userId: Int? = null  // Cambiado a Int
+    private var currentUser: User? = null
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Obtener el userId desde SharedPreferences
-        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-        userId = sharedPreferences.getInt("USER_ID", -1).takeIf { it != -1 }
+        // Obtener los datos del usuario logueado desde SharedPreferences
+        currentUser = getCurrentUser()
 
-        if (userId == null) {
+        if (currentUser == null) {
             Toast.makeText(this, "Error al obtener el ID de usuario", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewProfiles)
+        recyclerView = findViewById(R.id.recyclerViewProfiles)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val btnBaja = findViewById<Button>(R.id.btn_baja)
         btnBaja.setOnClickListener {
-            userId?.let { id ->
-                showConfirmationDialog(id)
-            } ?: Toast.makeText(this, "Seleccione un usuario", Toast.LENGTH_SHORT).show()
+            currentUser?.let { user ->
+                user.idUser?.let { id ->
+                    showConfirmationDialog(id)
+                } ?: Toast.makeText(this, "ID de usuario no disponible", Toast.LENGTH_SHORT).show()
+            } ?: Toast.makeText(this, "Error al obtener datos del usuario", Toast.LENGTH_SHORT).show()
         }
 
-        lifecycleScope.launch {
-            val response = RetrofitClient.apiService.getUsers()
-            if (response.isSuccessful && response.body() != null) {
-                val userList = response.body()!!
-                val adapter = UserRvAdapter(userList) { user ->
-                    userId = user.idUser  // Asegurarse de que idUser es Int
-                }
-                recyclerView.adapter = adapter
-            } else {
-                Toast.makeText(this@Profile, "Error al obtener datos", Toast.LENGTH_SHORT).show()
-            }
+        // Mostrar los datos del usuario logueado
+        displayCurrentUser()
+    }
+
+    private fun getCurrentUser(): User? {
+        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val idUser = sharedPreferences.getInt("USER_ID", -1)
+        if (idUser == -1) {
+            return null
         }
+        val nameUser = sharedPreferences.getString("Name_User", null)
+        val surnameUser = sharedPreferences.getString("SurName_User", null)
+        val emailUser = sharedPreferences.getString("Email_User", null)
+        val usernameUser = sharedPreferences.getString("Username_User", null)
+        val passwordUser = sharedPreferences.getString("Password_User", null)
+
+        return User(idUser, nameUser, surnameUser, emailUser, usernameUser, passwordUser)
     }
 
     private fun showConfirmationDialog(userId: Int) {
@@ -91,19 +99,30 @@ class Profile : AppCompatActivity() {
                 .build()
 
             val response = retrofit.create(APIService::class.java).deleteUser(userId)
-            if (response.isSuccessful) {
-                runOnUiThread {
+            runOnUiThread {
+                if (response.isSuccessful) {
                     Toast.makeText(this@Profile, "Usuario eliminado correctamente", Toast.LENGTH_SHORT).show()
                     // Redirigir a LoginActivity
-                    val intent = Intent(this@Profile, SignupActivity::class.java)
+                    val intent = Intent(this@Profile, LoginActivity::class.java)
                     startActivity(intent)
                     finish()  // Finalizar la actividad actual
-                }
-            } else {
-                runOnUiThread {
+                } else {
                     Toast.makeText(this@Profile, "Error al eliminar usuario", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
+    private fun displayCurrentUser() {
+        currentUser?.let { user ->
+            val userList = listOf(user) // Crear una lista con solo el usuario actual
+            val adapter = UserRvAdapter(userList) { selectedUser ->
+                // Aquí no es necesario hacer nada porque solo mostramos un usuario
+            }
+            recyclerView.adapter = adapter
+        } ?: run {
+            Toast.makeText(this, "Error al mostrar los datos del usuario", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
+

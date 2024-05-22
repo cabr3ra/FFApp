@@ -79,6 +79,11 @@ class LoginActivity : AppCompatActivity() {
                         val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
                         with(sharedPreferences.edit()) {
                             putInt("USER_ID", usuario.idUser!!)
+                            putString("Name_User", usuario.nameUser!!)
+                            putString("SurName_User", usuario.surnameUser!!)
+                            putString("Email_User", usuario.emailUser!!)
+                            putString("Username_User", usuario.usernameUser!!)
+                            putString("Password_User", usuario.passwordUser!!)
                             apply()
                         }
 
