@@ -37,8 +37,9 @@ class Profile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_profile)
+
+        // Inicializar vistas
         val btnLogout: Button = findViewById(R.id.btn_logout)
         btnLogout.setOnClickListener {
             // Crea un Intent para iniciar LoginActivity
@@ -48,6 +49,7 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
         currentUser = getCurrentUser()
 
         if (currentUser == null) {
@@ -202,4 +204,3 @@ class Profile : AppCompatActivity() {
         }
     }
 }
-
