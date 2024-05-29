@@ -68,6 +68,22 @@
         app:layout_constraintTop_toBottomOf="@id/btnComparator" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMaps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/red_origin"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/maps"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFruitShopList" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAboutUs"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -79,7 +95,8 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnFruitShopList" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMaps" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

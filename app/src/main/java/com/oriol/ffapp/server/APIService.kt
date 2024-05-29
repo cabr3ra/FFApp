@@ -27,7 +27,6 @@ interface APIService {
 
     @GET("PricesSortedAsc")
     suspend fun getPriceAsc(): Response<List<List<Any>>>
-
     @GET("PricesSortedDesc")
     suspend fun getPriceDesc(): Response<List<List<Any>>>
 

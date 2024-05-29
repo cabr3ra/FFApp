@@ -42,6 +42,12 @@ class Menu : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val btnMaps = findViewById<AppCompatButton>(R.id.btnMaps)
+        btnMaps.setOnClickListener{
+            val intent = Intent(this@Menu, Maps::class.java)
+            startActivity(intent)
+        }
+
         val btnAboutUs = findViewById<AppCompatButton>(R.id.btnAboutUs)
         btnAboutUs.setOnClickListener{
             val intent = Intent(this@Menu, AboutUs::class.java)

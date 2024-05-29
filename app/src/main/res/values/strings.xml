@@ -5,7 +5,8 @@
     <string name="menu">MENU</string>
     <string name="comparator">Comparador</string>
     <string name="fruitshoplist">Fruterias</string>
-    <string name="profile">profile</string>
+    <string name="profile">Perfil</string>
+    <string name="maps">Google Maps</string>
     <string name="about_us">Sobre nosotros</string>
     <string name="bienvenido">Hola</string>
     <string name="about_us_description1">
@@ -17,13 +18,13 @@
     <string name="app_description">Fruta Fácil es una startup que busca simplificar la vida de los consumidores al proporcionarles una herramienta fácil de usar para comparar los precios de frutas y verduras en sus tiendas locales de comestibles. El nombre "Fruta Fácil" encapsula perfectamente la facilidad y conveniencia que ofrecemos.</string>
     <string name="logoproyecto">logoProyecto</string>
     <string name="logoempresa">logoEmpresa</string>
-    <string name="admin">Admin</string>
     <string name="darse_de_baja">Darse de baja</string>
     <string name="nuevo_nombre">Nuevo Nombre</string>
     <string name="nuevo_nombre_de_usuario">Nuevo Nombre de Usuario</string>
     <string name="email_actual">Email actual</string>
     <string name="nombre_actual">Nombre actual</string>
     <string name="actualizar">Actualizar</string>
-    <string name="password_actual">Password actual</string>
-    <string name="nuevo_password">Nuevo Password</string>
+    <string name="password_actual">Contraseña actual</string>
+    <string name="nuevo_password">Nuevo Contraseña</string>
+    <string name="google_maps_key">AIzaSyDGtXTccmXL2zHSK3xoLmls8ADk_kTB130</string>
 </resources>
