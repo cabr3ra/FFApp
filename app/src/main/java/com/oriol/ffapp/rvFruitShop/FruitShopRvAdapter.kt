@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.R
 import com.oriol.ffapp.model.FruitShop
 
-class FruitShopRvAdapter(private var fruitShops:List<FruitShop>)
+class FruitShopRvAdapter(private var fruitShops: List<FruitShop>)
     : RecyclerView.Adapter<FruitShopViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FruitShopViewHolder {
         val layoutInflate = LayoutInflater.from(parent.context)
@@ -18,6 +18,7 @@ class FruitShopRvAdapter(private var fruitShops:List<FruitShop>)
         holder.printFruit(fruitShops[position])
     }
 
+
     override fun getItemCount(): Int {
         return fruitShops.size
     }
@@ -26,5 +27,9 @@ class FruitShopRvAdapter(private var fruitShops:List<FruitShop>)
     fun updateFruitShops(newFruitShops: List<FruitShop>) {
         fruitShops = newFruitShops
         notifyDataSetChanged()
+    }
+
+    fun getFruitShop(position: Int): FruitShop {
+        return fruitShops[position]
     }
 }

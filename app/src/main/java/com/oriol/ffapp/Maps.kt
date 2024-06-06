@@ -1,3 +1,4 @@
+// Activity Maps
 package com.oriol.ffapp
 
 import androidx.appcompat.app.AppCompatActivity
@@ -9,15 +10,25 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.oriol.ffapp.model.FruitShop
+import com.oriol.ffapp.rvFruitShop.FruitShopRvAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import com.oriol.ffapp.server.APIService
+import com.oriol.ffapp.server.RetrofitClient
 
 class Maps : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var apiService: APIService
     private lateinit var map: GoogleMap
+    private lateinit var adapter: FruitShopRvAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        apiService = RetrofitClient.apiService
         setContentView(R.layout.activity_maps)
         createFragment()
+        adapter = FruitShopRvAdapter(emptyList()) // Inicializamos el adaptador con una lista vacía
     }
 
     private fun createFragment() {
@@ -25,39 +36,54 @@ class Maps : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
+    private fun obtenerDatosTiendasFrutas() {
+        println("AAAAAAAAAAAAAAA")
+        GlobalScope.launch(Dispatchers.Main) {
+            val response = apiService.getFruitShops()
+            println("Respuesta recibida: $response")
+            if (response.isSuccessful) {
+                val fruitShops = response.body()
+                fruitShops?.let {
+                    println("Datos de las tiendas de frutas recibidos:")
+                    println(it) // Imprime los datos recibidos
+                    updateAdapterWithNewData(it)
+                }
+            } else {
+                println("ERROR")
+            }
+        }
+    }
+
+    private fun updateAdapterWithNewData(fruitShops: List<FruitShop>) {
+        adapter.updateFruitShops(fruitShops)
         createMarkers()
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        obtenerDatosTiendasFrutas()
+    // Llamamos al método para obtener los datos de las tiendas de frutas
+    }
+
     private fun createMarkers() {
-        val fruitShops = listOf(
-            FruitShop("Mercado de Sant Antoni", "Carrer del Comte d'Urgell, 1, Barcelona", "934263521"),
-            FruitShop("Arrels Fruita i Verdura", "Avinguda de Mistral, 24, Barcelona", "936787010"),
-            FruitShop("L’hort Supermarket", "Avinguda de Mistral, 39, Barcelona", "935275097"),
-            FruitShop("Frutas Esther", "Carrer de Vilamarí, 35, Barcelona", "933250579"),
-            FruitShop("Fruit Sa2pe", "Carrer de Calàbria, 17, Barcelona", "932892088"),
-            FruitShop("Frutes I Verdures", "Carrer de Manso, 60, Barcelona", "632196896"),
-            FruitShop("Fruiteries Borau", "Carrer de Sepúlveda, 130, Barcelona", "934250125"),
-            FruitShop("Fruites Ureña", "Carrer del Parlament, 39, Barcelona", "936115578")
-        )
-
-        val coordinates = listOf(
-            LatLng(41.37876867939558, 2.1620253391607633),
-            LatLng(41.37755806722884, 2.1573118914668306),
-            LatLng(41.37655203953501, 2.1565360814893864),
-            LatLng(41.37661078420362, 2.1521527256675155),
-            LatLng(41.37592913653946, 2.1597832121743927),
-            LatLng(41.37755630130479, 2.1619233588271682),
-            LatLng(41.38069977464263, 2.159207596832107),
-            LatLng(41.37700993399744, 2.1630170851881987)
-        )
-
-        for ((index, shop) in fruitShops.withIndex()) {
-            val marker = MarkerOptions().position(coordinates[index]).title(shop.nameFruitShop)
-            map.addMarker(marker)
+        for (i in 0 until adapter.itemCount) {
+            val fruitShop = adapter.getFruitShop(i)
+            fruitShop.horizontal?.let { horizontal ->
+                fruitShop.vertical?.let { vertical ->
+                    val coordinates = LatLng(horizontal, vertical)
+                    val marker = MarkerOptions().position(coordinates).title(fruitShop.nameFruitShop)
+                    map.addMarker(marker)
+                }
+            }
         }
-
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates[0], 16f), 4000, null)
+        if (adapter.itemCount > 0) {
+            val firstFruitShop = adapter.getFruitShop(0)
+            firstFruitShop.horizontal?.let { horizontal ->
+                firstFruitShop.vertical?.let { vertical ->
+                    val coordinates = LatLng(horizontal, vertical)
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 16f), 4000, null)
+                }
+            }
+        }
     }
 }
