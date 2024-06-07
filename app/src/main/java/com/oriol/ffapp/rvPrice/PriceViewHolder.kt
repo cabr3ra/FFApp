@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.oriol.ffapp.R
 import com.oriol.ffapp.model.Price
 
-class PriceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PriceViewHolder(itemView: View, private val onItemClicked: (Price) -> Unit) : RecyclerView.ViewHolder(itemView) {
     private val tvFruitName: TextView = itemView.findViewById(R.id.tv_rv_fruitName)
     private val tvFruitShopName: TextView = itemView.findViewById(R.id.tv_rv_fruitShopName)
     private val tvFruitPrice: TextView = itemView.findViewById(R.id.tv_rv_fruitPrice)
@@ -24,6 +24,10 @@ class PriceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             Glide.with(itemView.context).load(it).into(ivFruitImage)
         } ?: run {
             ivFruitImage.setImageResource(R.drawable.frutas)
+        }
+
+        itemView.setOnClickListener {
+            onItemClicked(price)
         }
     }
 

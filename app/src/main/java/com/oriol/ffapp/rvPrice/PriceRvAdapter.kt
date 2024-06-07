@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.R
 import com.oriol.ffapp.model.Price
 
-class PriceRvAdapter(private var prices: List<Price>) : RecyclerView.Adapter<PriceViewHolder>() {
+class PriceRvAdapter(
+    private var prices: List<Price>,
+    private val onItemClicked: (Price) -> Unit
+) : RecyclerView.Adapter<PriceViewHolder>() {
 
     fun setData(prices: List<Price>) {
         this.prices = prices
@@ -15,7 +18,7 @@ class PriceRvAdapter(private var prices: List<Price>) : RecyclerView.Adapter<Pri
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PriceViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_price_layout, parent, false)
-        return PriceViewHolder(itemView)
+        return PriceViewHolder(itemView, onItemClicked)
     }
 
     override fun onBindViewHolder(holder: PriceViewHolder, position: Int) {
@@ -26,3 +29,4 @@ class PriceRvAdapter(private var prices: List<Price>) : RecyclerView.Adapter<Pri
         return prices.size
     }
 }
+

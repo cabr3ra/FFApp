@@ -1,7 +1,9 @@
 package com.oriol.ffapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +37,9 @@ class Comparator : AppCompatActivity() {
     private fun setupRecyclerView() {
         val rvPrices = findViewById<RecyclerView>(R.id.rvPrices)
         rvPrices.layoutManager = LinearLayoutManager(this)
-        priceRvAdapter = PriceRvAdapter(emptyList())
+        priceRvAdapter = PriceRvAdapter(emptyList()) { price ->
+            onItemClicked(price)
+        }
         rvPrices.adapter = priceRvAdapter
     }
 
@@ -102,4 +106,13 @@ class Comparator : AppCompatActivity() {
             }
         }
     }
+
+    private fun onItemClicked(price: Price) {
+        // Iniciar la actividad Maps y pasar el nombre de la tienda
+        val intent = Intent(this, Maps::class.java).apply {
+            putExtra("SHOP_NAME", price.fruitShopName)
+        }
+        startActivity(intent)
+    }
+
 }

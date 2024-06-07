@@ -22,13 +22,18 @@ class Maps : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var apiService: APIService
     private lateinit var map: GoogleMap
     private lateinit var adapter: FruitShopRvAdapter
+    private var shopNameToHighlight: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         apiService = RetrofitClient.apiService
         setContentView(R.layout.activity_maps)
+
+        // Obtener el nombre de la tienda de los extras
+        shopNameToHighlight = intent.getStringExtra("SHOP_NAME")
+
         createFragment()
-        adapter = FruitShopRvAdapter(emptyList()) // Inicializamos el adaptador con una lista vacía
+        adapter = FruitShopRvAdapter(emptyList())
     }
 
     private fun createFragment() {
@@ -37,15 +42,11 @@ class Maps : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun obtenerDatosTiendasFrutas() {
-        println("AAAAAAAAAAAAAAA")
         GlobalScope.launch(Dispatchers.Main) {
             val response = apiService.getFruitShops()
-            println("Respuesta recibida: $response")
             if (response.isSuccessful) {
                 val fruitShops = response.body()
                 fruitShops?.let {
-                    println("Datos de las tiendas de frutas recibidos:")
-                    println(it) // Imprime los datos recibidos
                     updateAdapterWithNewData(it)
                 }
             } else {
@@ -62,28 +63,37 @@ class Maps : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         obtenerDatosTiendasFrutas()
-    // Llamamos al método para obtener los datos de las tiendas de frutas
     }
 
     private fun createMarkers() {
+        var markerToHighlight: MarkerOptions? = null
+
         for (i in 0 until adapter.itemCount) {
             val fruitShop = adapter.getFruitShop(i)
             fruitShop.horizontal?.let { horizontal ->
                 fruitShop.vertical?.let { vertical ->
                     val coordinates = LatLng(horizontal, vertical)
                     val marker = MarkerOptions().position(coordinates).title(fruitShop.nameFruitShop)
-                    map.addMarker(marker)
+
+                    if (fruitShop.nameFruitShop == shopNameToHighlight) {
+                        // Establece el snippet para la tienda resaltada
+                        marker.snippet(fruitShop.nameFruitShop)
+
+                        // Agrega el marcador al mapa y guarda una referencia si es necesario
+                        markerToHighlight = marker
+                        map.addMarker(marker)?.showInfoWindow() // Muestra el snippet
+                    } else {
+                        // Agrega el marcador al mapa sin mostrar el snippet
+                        map.addMarker(marker)
+                        markerToHighlight = marker
+                    }
                 }
             }
         }
-        if (adapter.itemCount > 0) {
-            val firstFruitShop = adapter.getFruitShop(0)
-            firstFruitShop.horizontal?.let { horizontal ->
-                firstFruitShop.vertical?.let { vertical ->
-                    val coordinates = LatLng(horizontal, vertical)
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 16f), 4000, null)
-                }
-            }
+
+
+        markerToHighlight?.let { marker ->
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 16f), 4000, null)
         }
     }
 }
