@@ -9,7 +9,8 @@ class UserProvider {
                 passwordUser = "",
                 emailUser = "",
                 nameUser = "",
-                surnameUser = ""
+                surnameUser = "",
+
             )
         )
     }

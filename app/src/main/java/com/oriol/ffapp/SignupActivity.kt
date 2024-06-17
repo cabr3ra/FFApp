@@ -3,18 +3,21 @@ package com.oriol.ffapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.oriol.ffapp.model.User
 import com.oriol.ffapp.server.RetrofitClient
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var signupUsername: EditText
     private lateinit var signupPassword: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +26,10 @@ class SignupActivity : AppCompatActivity() {
         signupUsername = findViewById(R.id.signupUsername)
         signupPassword = findViewById(R.id.signupPassword)
 
+
         val btnSignup = findViewById<Button>(R.id.signupButton)
         btnSignup.setOnClickListener {
-            postUserRegister(it)
+            postUserRegister()
         }
 
         val tvLoginRedirect = findViewById<TextView>(R.id.loginRedirect)
@@ -35,38 +39,34 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun postUserRegister(view: View) {
+    private fun postUserRegister() {
         val usernameText = signupUsername.text.toString()
         val passwordText = signupPassword.text.toString()
 
+
         if (validateFields(usernameText, passwordText)) {
             val user = User(
-                idUser = null,
                 usernameUser = usernameText,
                 passwordUser = passwordText,
-                emailUser = "",
-                nameUser = "",
-                surnameUser = ""
+
             )
 
             val call = RetrofitClient.apiService.postRegister(user)
-            call.enqueue(object : retrofit2.Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
+            call.enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        // La solicitud fue exitosa
                         println("Solicitud POST exitosa $usernameText $passwordText")
-
                         val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                         startActivity(intent)
                     } else {
-                        // La solicitud no fue exitosa
                         println("Error en la solicitud POST: ${response.code()}")
+                        Toast.makeText(this@SignupActivity, "Error al registrarse: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    // Se produjo un error de red u otro tipo de error
                     println("Error en la solicitud POST: ${t.message}")
+                    Toast.makeText(this@SignupActivity, "Error de red: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -82,3 +82,4 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 }
+

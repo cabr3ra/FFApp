@@ -12,4 +12,5 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val surname: TextView = itemView.findViewById(R.id.tv_rv_surname)
     val email: TextView = itemView.findViewById(R.id.tv_rv_email)
 
+
 }

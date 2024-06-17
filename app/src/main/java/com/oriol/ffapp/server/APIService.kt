@@ -1,19 +1,13 @@
 package com.oriol.ffapp.server
 
-
 import com.oriol.ffapp.model.FruitShop
 import com.oriol.ffapp.model.User
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
+import java.math.BigDecimal
 
-
+data class FruitDTO(val name: String, val fruitShopId: Long, val price: BigDecimal)
 interface APIService {
 
     @GET("FruitShops")
@@ -27,6 +21,7 @@ interface APIService {
 
     @GET("PricesSortedAsc")
     suspend fun getPriceAsc(): Response<List<List<Any>>>
+
     @GET("PricesSortedDesc")
     suspend fun getPriceDesc(): Response<List<List<Any>>>
 
@@ -50,5 +45,9 @@ interface APIService {
 
     @DELETE("Users/delete/{userId}")
     suspend fun deleteUser(@Path("userId") userId: Int): Response<Void>
+
+    @POST("/fruits/add")
+    suspend fun addFruit(@Body fruitDTO: FruitDTO): Response<FruitDTO>
 }
+
 

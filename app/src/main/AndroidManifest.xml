@@ -62,6 +62,10 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat" />
 
+        <activity android:name=".AddFruitActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

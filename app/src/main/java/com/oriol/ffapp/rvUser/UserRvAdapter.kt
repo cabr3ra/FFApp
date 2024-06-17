@@ -26,6 +26,7 @@ class UserRvAdapter(
         holder.surname.text = currentUser.surnameUser
         holder.email.text = currentUser.emailUser
 
+
         holder.itemView.setOnClickListener {
             onUserClick(currentUser)
         }
@@ -35,4 +36,5 @@ class UserRvAdapter(
         return userList.size
     }
 }
+
 

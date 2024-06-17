@@ -73,23 +73,32 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     println("Login successful!")
+
                     val usuario = response.body()
                     if (usuario != null) {
+                        println("Valor isCompany (desde response.body): " + usuario.isCompany)
+
                         // Guardar userId en SharedPreferences
                         val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
                         with(sharedPreferences.edit()) {
-                            putInt("USER_ID", usuario.idUser!!)
-                            putString("Name_User", usuario.nameUser!!)
-                            putString("SurName_User", usuario.surnameUser!!)
-                            putString("Email_User", usuario.emailUser!!)
-                            putString("Username_User", usuario.usernameUser!!)
-                            putString("Password_User", usuario.passwordUser!!)
+                            putInt("USER_ID", usuario.idUser ?: -1)  // Evita NPE con Elvis operator
+                            putString("Name_User", usuario.nameUser ?: "")
+                            putString("SurName_User", usuario.surnameUser ?: "")
+                            putString("Email_User", usuario.emailUser ?: "")
+                            putString("Username_User", usuario.usernameUser ?: "")
+                            putString("Password_User", usuario.passwordUser ?: "")
+                            putBoolean("isCompany", usuario.isCompany ?: false)
+
+                            // Verifica el valor guardado en SharedPreferences
+                            println("Valor isCompany (desde SharedPreferences): " + sharedPreferences.getBoolean("isCompany", false))
+
                             apply()
                         }
 
                         val intent = Intent(this@LoginActivity, Menu::class.java).apply {
                             putExtra("USERNAME_PARAMETRE", loginUsername.text.toString())
                             putExtra("LoggedIn", true)
+                            putExtra("isCompany", usuario.isCompany ?: false)
                         }
                         startActivity(intent)
                     }
@@ -98,9 +107,12 @@ class LoginActivity : AppCompatActivity() {
                     println(response.errorBody()?.string())
                     println("Login not successful!")
                 }
+
+
             }
         }
     }
+
 
     private fun validateFields(): Boolean {
         val loginUser = loginUsername.text.toString()

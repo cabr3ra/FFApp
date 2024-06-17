@@ -8,13 +8,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oriol.ffapp.model.User
 import com.oriol.ffapp.rvUser.UserRvAdapter
 import com.oriol.ffapp.server.APIService
-import com.oriol.ffapp.server.RetrofitClient
 import com.oriol.ffapp.server.Routes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -90,6 +88,8 @@ class Profile : AppCompatActivity() {
     private fun getCurrentUser(): User? {
         val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val idUser = sharedPreferences.getInt("USER_ID", -1)
+        val isCompany = sharedPreferences.getBoolean("Is_Company", false)
+
         if (idUser == -1) {
             return null
         }
@@ -99,7 +99,15 @@ class Profile : AppCompatActivity() {
         val usernameUser = sharedPreferences.getString("Username_User", null)
         val passwordUser = sharedPreferences.getString("Password_User", null)
 
-        return User(idUser, nameUser, surnameUser, emailUser, usernameUser, passwordUser)
+        return User(
+            idUser,
+            nameUser ?: "",
+            surnameUser ?: "",
+            emailUser ?: "",
+            usernameUser ?: "",
+            passwordUser ?: "",
+            isCompany
+        )
     }
 
     private fun showConfirmationDialog(userId: Int) {
@@ -169,7 +177,9 @@ class Profile : AppCompatActivity() {
             surnameUser = editSurname.text.toString(),
             emailUser = editEmail.text.toString(),
             usernameUser = editUsername.text.toString(),
-            passwordUser = editPassword.text.toString()
+            passwordUser = editPassword.text.toString(),
+
+
         )
 
         CoroutineScope(Dispatchers.IO).launch {
